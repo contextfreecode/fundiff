@@ -2,6 +2,8 @@ import jax
 import jax.numpy as jnp
 
 
+# TODO Benchmark with and without jit. (And cpu vs gpu.)
+@jax.jit
 def quad(x):
     return x ** 2
 
