@@ -4,12 +4,12 @@ import jax.numpy as np
 import typing as typ
 
 
-ArrayLike = typ.Union[float, np.ndarray]
+Array = typ.Union[float, np.ndarray]
 
 
 # TODO Benchmark with and without jit. (And cpu vs gpu.)
 @jax.jit
-def quad(x: ArrayLike) -> ArrayLike:
+def quad(x: Array) -> Array:
     return x ** 2
 
 
