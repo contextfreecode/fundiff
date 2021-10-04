@@ -15,8 +15,9 @@ def quad(x: ArrayLike) -> ArrayLike:
 
 def main():
     quad_grad = jax.grad(lambda x: quad(x).sum())
+    quad_grad2 = lambda x: np.diag(jax.jacfwd(quad)(x))
     x = np.linspace(-4, 4, 17)
-    y = np.vstack([x, quad(x), quad_grad(x)])
+    y = np.vstack([x, quad(x), quad_grad(x), quad_grad2(x)])
     print(y.T)
 
 
