@@ -1,4 +1,4 @@
-# Linear Regression, Basic CNNs with Jax and Nx
+# Linear Regression, Basic CNNs with Dex, Jax and Nx
 ### in progress
 
 Here we want to replicate the same procedures using Jax and Nx.
@@ -13,6 +13,10 @@ TODO(ifueko)
  - [ ] Advancecd Examples (ImageNet? NYUDepth?)
 
 ## Base Examples
+### Dex
+[Dex Linear Regression](https://github.com/google-research/dex-lang/blob/main/examples/regression.dx)
+[Dex MNIST](https://github.com/google-research/dex-lang/blob/main/examples/mnist-nearest-neighbors.dx)
+
 ### JAX
 [Jax Linear Regression](https://coax.readthedocs.io/en/latest/examples/linear_regression/jax.html)
 [Jax MNIST Classification](https://github.com/google/jax/blob/main/examples/mnist_classifier.py)
