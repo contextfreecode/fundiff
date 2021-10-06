@@ -14,12 +14,12 @@ TODO(ifueko)
 
 ## Base Examples
 ### JAX
-[Jax Linear Regression](https://coax.readthedocs.io/en/latest/examples/linear_regression/jax.html)
-[Jax MNIST Classification](https://github.com/google/jax/blob/main/examples/mnist_classifier.py)
+- [Jax Linear Regression](https://coax.readthedocs.io/en/latest/examples/linear_regression/jax.html)
+- [Jax MNIST Classification](https://github.com/google/jax/blob/main/examples/mnist_classifier.py)
 
 ### Nx
-[Nx Linear Regression](https://github.com/elixir-nx/nx/blob/main/exla/examples/regression.exs)
-[Nx MNIST Classification](https://github.com/elixir-nx/nx/blob/main/exla/examples/mnist.exs)
+- [Nx Linear Regression](https://github.com/elixir-nx/nx/blob/main/exla/examples/regression.exs)
+- [Nx MNIST Classification](https://github.com/elixir-nx/nx/blob/main/exla/examples/mnist.exs)
 
 ## Useful Links for Education
-[How to Think in Jax](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html)
+- [How to Think in Jax](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html)
