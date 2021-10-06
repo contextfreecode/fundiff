@@ -1,4 +1,6 @@
 '# Adapted from https://github.com/google-research/dex-lang/blob/main/examples/mnist-nearest-neighbors.dx 
+'# this will not work because the dxbo file is not available.
+'# dex_full_tutorial.dx has a full tutorial including fashion MNIST, which can be useful to adapt this example.
 
 load dxbo "scratch/mnist.dxbo" as mnist
 
