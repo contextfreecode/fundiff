@@ -11,3 +11,5 @@ RUN bash -c 'curl -sSL https://get.haskellstack.org/ | sh'
 
 RUN git clone https://github.com/google-research/dex-lang.git
 RUN cd dex-lang && make
+ENV LD_LIBRARY_PATH /usr/local/cuda/compat 
+RUN cd dex-lang && make install
