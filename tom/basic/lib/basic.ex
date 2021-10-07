@@ -21,6 +21,12 @@ defmodule Basic do
   # https://github.com/elixir-nx/nx/blob/main/exla/bench/softmax.exs
   # https://github.com/elixir-nx/nx/tree/main/nx#readme
 
+  defn quad(x) do
+    Nx.power(x, 2.0)
+  end
+
+  defn quad_grad(x), do: grad(x, fn x -> quad(x) end)
+
   # @defn_compiler {EXLA, client: :host}
   defn softmax(x) do
     Nx.exp(x) / Nx.sum(Nx.exp(x))
