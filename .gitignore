@@ -1,4 +1,6 @@
+.bash_history
+.cache/
 env.sh
-.mypy_cache
+.mypy_cache/
 notes/
 notes.txt
