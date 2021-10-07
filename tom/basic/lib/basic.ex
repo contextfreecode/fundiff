@@ -1,6 +1,7 @@
 defmodule Basic do
   import Nx.Defn
-    @moduledoc """
+
+  @moduledoc """
   Documentation for `Basic`.
   """
 
@@ -25,7 +26,7 @@ defmodule Basic do
     Nx.power(x, 2.0)
   end
 
-  defn quad_grad(x), do: grad(x, fn x -> quad(x) end)
+  defn(quad_grad(x), do: grad(x, fn x -> quad(x) end))
 
   # @defn_compiler {EXLA, client: :host}
   defn softmax(x) do
@@ -33,11 +34,11 @@ defmodule Basic do
   end
 
   @defn_compiler EXLA
-  defn host(x), do: softmax(x)
+  defn(host(x), do: softmax(x))
 
   @defn_compiler {EXLA, client: :cuda}
-  defn cuda(x), do: softmax(x)
+  defn(cuda(x), do: softmax(x))
 
   @defn_compiler {EXLA, client: :cuda, run_options: [keep_on_device: true]}
-  defn cuda_keep(x), do: softmax(x)
+  defn(cuda_keep(x), do: softmax(x))
 end
