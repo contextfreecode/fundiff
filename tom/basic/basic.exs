@@ -7,7 +7,7 @@ defmodule Blah do
     Nx.transpose(Nx.stack([x, x |> quad, x |> quad_grad]))
   end
 
-  # @defn_compiler {EXLA, client: :cuda}
+  @defn_compiler {EXLA, client: :cuda}
   # @defn_compiler EXLA
   defn calc_speed do
     x = linspace(-1, 1, 100000000)
