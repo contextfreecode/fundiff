@@ -20,6 +20,8 @@ ENV LD_LIBRARY_PATH /usr/local/cuda/compat
 RUN cd dex-lang && PREFIX=/usr/local/bin make install
 
 # Nx dependencies
+# IMPORTANT -> I failed to make mix happy with the bound volume,
+# IMPORTANT -> but I also haven't deleted this setup here.
 RUN curl -O https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
 RUN dpkg -i erlang-solutions_2.0_all.deb
 RUN apt-get update
@@ -29,7 +31,7 @@ RUN apt-get install -y elixir
 ENV EXLA_TARGET cuda
 ENV XLA_TARGET cuda111
 
-# Locales
+# Locales, which iex otherwise complains about
 RUN apt-get install -y locales
 RUN locale-gen en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
