@@ -1,1 +1,20 @@
-:p grad (\x. pow x 2.0) 1.0
+-- x = for i:(Fin 17). ordinal i
+x = linspace (Fin 17) (-4.0) 4.5
+
+def square (x:n=>Float) : n=>Float =
+    pow x (for i. 2.0)
+
+def sum_square(x:n=>Float) : Float =
+    -- :p 5
+    x2 = square x
+    sum x2
+    -- sum $ square x
+
+:p x
+:p square x
+:t sum
+:p (sum . square) x
+:p sum_square x
+-- :p (for i. 2.0)
+:p grad sum_square x
+:p jvp square x one
