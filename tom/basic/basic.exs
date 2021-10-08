@@ -1,17 +1,20 @@
-defmodule Blah do
+defmodule Basic do
 
   import Nx.Defn
 
   defn calc_grad do
     x = linspace(-4, 4, 17)
-    Nx.transpose(Nx.stack([x, x |> quad, x |> quad_grad]))
+    Nx.transpose(Nx.stack([x, x |> quad(), x |> quad_grad()]))
   end
 
   @defn_compiler {EXLA, client: :cuda}
   # @defn_compiler EXLA
   defn calc_speed do
-    x = linspace(-1, 1, 100000000)
-    Nx.tensor(Nx.size(quad(x)))
+    x = linspace(-1, 1, 100_000_000)
+    Nx.stack([
+      x |> quad() |> Nx.size() |> Nx.tensor(),
+      x |> quad_grad() |> Nx.size() |> Nx.tensor(),
+    ])
   end
 
   defn linspace(min, max, count) do
@@ -28,5 +31,5 @@ defmodule Blah do
 
 end
 
-IO.inspect Blah.calc_grad
-IO.inspect Blah.calc_speed
+IO.inspect Basic.calc_grad
+IO.inspect Basic.calc_speed
