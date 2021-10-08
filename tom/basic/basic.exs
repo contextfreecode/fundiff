@@ -7,14 +7,19 @@ defmodule Basic do
     Nx.transpose(Nx.stack([x, x |> quad(), x |> quad_grad()]))
   end
 
-  @defn_compiler {EXLA, client: :cuda}
-  # @defn_compiler EXLA
   defn calc_speed do
     x = linspace(-1, 1, 100_000_000)
-    Nx.stack([
-      x |> quad() |> Nx.size() |> Nx.tensor(),
-      x |> quad_grad() |> Nx.size() |> Nx.tensor(),
-    ])
+    x |> quad() |> Nx.mean()
+  end
+
+  @defn_compiler EXLA
+  defn calc_speed_cpu do
+    calc_speed()
+  end
+
+  @defn_compiler {EXLA, client: :cuda}
+  defn calc_speed_gpu do
+    calc_speed()
   end
 
   defn linspace(min, max, count) do
@@ -29,7 +34,13 @@ defmodule Basic do
     grad(x, fn x -> quad(x) end)
   end
 
+  def main do
+    IO.inspect(calc_grad())
+    IO.puts("go")
+    IO.inspect(calc_speed_cpu())
+    IO.inspect(calc_speed_gpu())
+  end
+
 end
 
-IO.inspect Basic.calc_grad
-IO.inspect Basic.calc_speed
+Basic.main()
