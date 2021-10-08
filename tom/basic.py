@@ -15,9 +15,10 @@ def calc_backend():
     quad_cpu = jax.jit(quad, backend="cpu")
     quad_gpu = jax.jit(quad, backend="gpu")
     x = linspace(-1, 1, int(1e8))
+    print("go")
     # TODO Time execution.
-    print(quad_cpu(x).shape)
-    print(quad_gpu(x).shape)
+    print(quad_cpu(x).mean())
+    print(quad_gpu(x).mean())
 
 
 def calc_grad():
