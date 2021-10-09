@@ -1,0 +1,80 @@
+'# Adapted from https://github.com/google-research/dex-lang/blob/main/examples/regression.dx 
+
+import plot
+
+-- Conjugate gradients solver
+def solve (mat:m=>m=>Float) (b:m=>Float) : m=>Float =
+  x0 = for i:m. 0.0
+  ax = mat **. x0
+  r0 = b - ax
+  (xOut, _, _) = fold (x0, r0, r0) $
+     \s:m (x, r, p).
+       ap = mat **. p
+       alpha = vdot r r / vdot p ap
+       x' = x + alpha .* p
+       r' = r - alpha .* ap
+       beta = vdot r' r' / (vdot r r + 0.000001)
+       p' = r' + beta .* p
+       (x', r', p')
+  xOut
+
+'Make some synthetic data
+
+Nx = Fin 100
+noise = 0.1
+[k1, k2] = splitKey (newKey 0)
+
+def trueFun (x:Float) : Float =
+  x + sin (5.0 * x)
+
+xs : Nx=>Float = for i. rand (ixkey k1 i)
+ys : Nx=>Float = for i. trueFun xs.i + noise * randn (ixkey k2 i)
+
+:html showPlot $ xyPlot xs ys
+> <html output>
+
+'Implement basis function regression
+
+def regress (featurize: Float -> d=>Float) (xRaw:n=>Float) (y:n=>Float) : d=>Float =
+  x = map featurize xRaw
+  xT = transpose x
+  solve (xT ** x) (xT **. y)
+
+'Fit a third-order polynomial
+
+def poly (x:Float) : d=>Float =
+  for i. pow x (IToF (ordinal i))
+
+params : (Fin 4)=>Float = regress poly xs ys
+
+def predict (x:Float) : Float =
+  vdot params (poly x)
+
+
+xsTest = linspace (Fin 200) 0.0 1.0
+
+:html showPlot $ xyPlot xsTest (map predict xsTest)
+> <html output>
+
+'RMS error
+
+def rmsErr (truth:n=>Float) (pred:n=>Float) : Float =
+  sqrt $ mean for i. sq (pred.i - truth.i)
+
+:p rmsErr ys (map predict xs)
+> 0.252695
+
+
+def tabCat (xs:n=>a) (ys:m=>a) : ({left:n|right:m})=>a =
+  for i. case i of
+    {| left  = i' |} -> xs.i'
+    {| right = i' |} -> ys.i'
+
+xsPlot = tabCat xs xsTest
+ysPlot = tabCat ys $ map predict xsTest
+
+:html showPlot $ xycPlot xsPlot ysPlot $
+        for i. case i of
+                 {| left  = _ |} -> 0.0
+                 {| right = _ |} -> 1.0
+> <html output>
