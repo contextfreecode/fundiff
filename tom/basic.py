@@ -33,6 +33,7 @@ def calc_grad():
 # @jax.jit
 def square(x: Array) -> Array:
     return x ** 2
+    # return np.power(x, 2)
 
 
 def main():
