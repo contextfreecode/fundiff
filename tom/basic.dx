@@ -1,6 +1,3 @@
--- x = for i:(Fin 17). ordinal i
-x = linspace (Fin 17) (-4.0) 4.5
-
 def square (x:n=>Float) : n=>Float =
     pow x (for i. 2.0)
 
@@ -10,9 +7,10 @@ def sum_square(x:n=>Float) : Float =
     sum x2
     -- sum $ square x
 
-:p x
-:p square x
-:t sum
-:p sum_square x
-:p grad sum_square x
-:p jvp square x one
+x = linspace (Fin 17) (-4.0) 4.5
+:p transpose [x, square x, grad sum_square x]
+
+-- :p calc_grad
+-- :p grad sum_square x
+-- :p grad (\x. sum $ square x) x
+-- :p jvp square x one
