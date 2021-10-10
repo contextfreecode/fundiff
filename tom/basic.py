@@ -38,6 +38,17 @@ def square(x: Array) -> Array:
 def main():
     calc_backend()
     calc_grad()
+    print(optimize(fun=square, x=4.0))
+
+
+def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:
+    fun_grad = jax.grad(fun)
+    rate = 0.4
+    nsteps = 20
+    for _ in range(nsteps):
+        x -= rate * fun_grad(x)
+        print(x)
+    return x
 
 
 main()
