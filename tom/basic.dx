@@ -13,8 +13,6 @@ def sum_square(x:n=>Float) : Float =
 :p x
 :p square x
 :t sum
-:p (sum . square) x
 :p sum_square x
--- :p (for i. 2.0)
 :p grad sum_square x
 :p jvp square x one
