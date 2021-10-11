@@ -4,12 +4,12 @@ defmodule Basic do
 
   defn calc_grad do
     x = linspace(-4, 4, 17)
-    Nx.transpose(Nx.stack([x, x |> quad(), x |> quad_grad()]))
+    Nx.transpose(Nx.stack([x, x |> square(), x |> square_grad()]))
   end
 
   defn calc_speed do
     x = linspace(-1, 1, 100_000_000)
-    x |> quad() |> Nx.mean()
+    x |> square() |> Nx.mean()
   end
 
   @defn_compiler EXLA
@@ -26,12 +26,12 @@ defmodule Basic do
     Nx.iota({count}) * (max - min) / (count - 1) + min
   end
 
-  defn quad(x) do
+  defn square(x) do
     Nx.power(x, 2.0)
   end
 
-  defn quad_grad(x) do
-    grad(x, fn x -> quad(x) end)
+  defn square_grad(x) do
+    grad(x, fn x -> square(x) end)
   end
 
   def main do
