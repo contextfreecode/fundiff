@@ -1,28 +1,49 @@
-type Arm = {angles: number[], lengths: number[]};
+type Arm = { angles: number[]; lengths: number[] };
 
-type Frame = {angle: number, point: Point};
+type Transform = { angle: number; point: Point };
 
-type Point = {x: number, y: number};
+type Point = { x: number; y: number };
 
-function forward({angles, lengths}: Arm) {
-  return lengths.reduce(
-    (chain, length, index) => {
-      const end = chain.slice(-1)[0];
+type Seq = { angleFrames: number[][]; lengths: number[] };
+
+function forward({ angles, lengths }: Arm): Transform[] {
+  let end = { angle: 0, point: { x: 0, y: 0 } } as Transform;
+  return lengths.map(
+    (length, index) => {
       const angle = angles[index] + end.angle;
-      const next =
-        {angle, point: {x: end.point.x + length * Math.cos(angle)}} as Frame;
-      return chain.concat([next]);
+      end = {
+        angle,
+        point: {
+          x: end.point.x + length * Math.cos(angle),
+          y: end.point.y + length * Math.sin(angle),
+        },
+      };
+      return end;
     },
-    [{angle: 0, point: {x: 0, y: 0}} as Frame],
   );
 }
 
-function main() {
-  console.log("hi");
+export function main() {
+  const seq = parseSeq();
+  const chain = forward({ angles: seq.angleFrames[0], lengths: seq.lengths });
+  console.log(chain);
+  render();
+}
+
+function parseSeq(): Seq {
+  const field = document.getElementById("field") as HTMLTextAreaElement;
+  const lines = field.value.split("\n") as string[];
+  const rows = lines.map((line) => {
+    const texts = line.replaceAll(/[^-+\d\.e]+/g, " ").trim().split(/\s+/);
+    const vals = texts.map((text) => parseFloat(text));
+    return vals;
+  })
+  return {angleFrames: rows.slice(1), lengths: rows[0]};
 }
 
 function render() {
-  document.getElementById("here");
+  const path = document.getElementById("path");
+  console.log(path);
 }
 
-main()
+main();

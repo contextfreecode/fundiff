@@ -61,7 +61,7 @@ def invert(*, angles: jnp.ndarray, goal: jnp.ndarray, lengths: jnp.ndarray):
 def main():
     angles = jnp.array([0.5, -0.25, -0.25]) * jnp.pi
     lengths = jnp.array([1.0, 1.0, 0.5])
-    # process_variety(angles=angles, lengths=lengths)
+    process_variety(angles=angles, lengths=lengths)
     invert(angles=angles, goal=jnp.array([1.0, 1.0]), lengths=lengths)
 
 
