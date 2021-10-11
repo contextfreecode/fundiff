@@ -1,9 +1,11 @@
+import dataclasses as dc
 import jax
 import jax.numpy as jnp
 import numpy as np
 import typing as typ
 
 
+# @dc.dataclass
 class Link(typ.NamedTuple):
     angle: float
     length: float
@@ -12,7 +14,7 @@ class Link(typ.NamedTuple):
 Arm = list[Link]
 
 
-def armify(angles: jnp.ndarray, lengths: jnp.ndarray) -> jnp.ndarray:
+def armify(angles: jnp.ndarray, lengths: jnp.ndarray) -> Arm:
     return [Link(angle=angle, length=length) for angle, length in zip(angles, lengths)]
 
 
@@ -46,21 +48,21 @@ def forward2(*, angles: jnp.ndarray, lengths: jnp.ndarray) -> jnp.ndarray:
 def main():
     angles = jnp.array([0.5, -0.25, -0.25]) * jnp.pi
     lengths = jnp.array([1.0, 1.0, 0.5])
-    print(forward0(arm=armify(angles=angles, lengths=lengths)))
-    print(forward1(angles=angles, lengths=lengths))
-    print(forward2(angles=angles, lengths=lengths))
-    forward0a = lambda angles: forward0(arm=armify(angles=angles, lengths=lengths))
-    arm_jac0 = jax.jacfwd(forward0a)
-    print(arm_jac0(angles))
-    forward1a = lambda angles: forward1(angles=angles, lengths=lengths)
-    arm_jac1 = jax.jacfwd(forward1a)
-    print(arm_jac1(angles))
-    forward2a = lambda angles: forward2(angles=angles, lengths=lengths)
-    arm_jac2 = jax.jacfwd(forward2a)
-    print(arm_jac2(angles))
-    print(np.linalg.pinv(arm_jac2(angles)))
-    # Was hanging on jnp.linalg.pinv, now crashing,
-    # print(jnp.linalg.pinv(arm_jac2(angles)))
+    forward_angles_funs = [
+        lambda angles: forward0(arm=armify(angles=angles, lengths=lengths)),
+        lambda angles: forward1(angles=angles, lengths=lengths),
+        lambda angles: forward2(angles=angles, lengths=lengths),
+    ]
+    for forward_angles in forward_angles_funs:
+        process(angles=angles, forward=forward_angles)
+
+
+def process(*, angles: jnp.ndarray, forward: typ.Callable):
+    print(forward(angles))
+    arm_jac = jax.jacobian(forward)
+    jac = arm_jac(angles)
+    print(jac)
+    print(np.linalg.pinv(jac))
 
 
 if __name__ == "__main__":

@@ -23,7 +23,7 @@ def calc_backend():
 
 def calc_grad():
     square_grad = jax.grad(lambda x: square(x).sum())
-    square_grad2 = lambda x: np.diag(jax.jacfwd(square)(x))
+    square_grad2 = lambda x: np.diag(jax.jacobian(square)(x))
     x = np.linspace(-4, 4, 17)
     y = np.vstack([x, square(x), square_grad(x), square_grad2(x)]).T
     print(y)
