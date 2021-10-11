@@ -1,6 +1,4 @@
-function hi1() {
-    document.getElementById("here");
+function main() {
     console.log("hi");
 }
-hi1();
-export { hi1 as hi };
+main();
