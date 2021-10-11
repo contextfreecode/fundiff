@@ -23,7 +23,7 @@ def calc_backend():
 
 def calc_grad():
     square_grad = jax.grad(lambda x: square(x).sum())
-    square_grad2 = lambda x: np.diag(jax.jacfwd(square)(x))
+    square_grad2 = lambda x: np.diag(jax.jacobian(square)(x))
     x = np.linspace(-4, 4, 17)
     y = np.vstack([x, square(x), square_grad(x), square_grad2(x)]).T
     print(y)
@@ -33,11 +33,23 @@ def calc_grad():
 # @jax.jit
 def square(x: Array) -> Array:
     return x ** 2
+    # return np.power(x, 2)
 
 
 def main():
     calc_backend()
     calc_grad()
+    print(optimize(fun=square, x=4.0))
+
+
+def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:
+    fun_grad = jax.grad(fun)
+    rate = 0.4
+    nsteps = 20
+    for _ in range(nsteps):
+        x -= rate * fun_grad(x)
+        print(x)
+    return x
 
 
 main()
