@@ -62,7 +62,7 @@ def main():
     angles = jnp.array([0.5, -0.25, -0.25]) * jnp.pi
     lengths = jnp.array([1.0, 1.0, 0.5])
     process_variety(angles=angles, lengths=lengths)
-    invert(angles=angles, goal=jnp.array([1.0, 1.0]), lengths=lengths)
+    invert(angles=angles, goal=jnp.array([1.0, 0.0]), lengths=lengths)
 
 
 def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:
