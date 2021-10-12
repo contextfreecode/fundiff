@@ -44,7 +44,7 @@ RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 # Jax
 RUN pip install --upgrade pip
 RUN pip install --upgrade "jax[cuda111]" -f https://storage.googleapis.com/jax-releases/jax_releases.html
-RUN pip install sklearn
+RUN pip install sklearn torch
 
 # Editor
 RUN apt -y install vim
