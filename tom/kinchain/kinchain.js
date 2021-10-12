@@ -19,30 +19,53 @@ function forward({ angles , lengths  }) {
     });
 }
 function main1() {
-    const seq = parseSeq();
-    console.log(seq);
-    const chain = forward({
-        angles: seq.angleFrames.slice(-1)[0],
-        lengths: seq.lengths
+    const lengths = parseLengths();
+    const field = document.getElementById("field");
+    const update = ()=>{
+        const angles = parseRow(field);
+        const chain = forward({
+            angles,
+            lengths
+        });
+        render(chain);
+    };
+    update();
+    document.addEventListener("selectionchange", (event)=>{
+        if (event.target == field) {
+            update();
+        }
     });
-    console.log(chain);
-    render(chain);
 }
-function parseSeq() {
+function parseLine(line) {
+    const texts = line.replaceAll(/[^-+\d\.e]+/g, " ").trim().split(/\s+/);
+    const vals = texts.map((text)=>parseFloat(text)
+    );
+    return vals;
+}
+function parseRow(field) {
+    const text = field.value;
+    const index = field.selectionStart;
+    return parseRowAt(text, index);
+}
+function parseRowAt(text, index) {
+    const begin = Math.max(0, text.lastIndexOf("\n", index - 1));
+    let end = text.indexOf("\n", index);
+    if (end < 0) {
+        end = text.length;
+    }
+    if (begin <= 0) {
+        return parseRowAt(text, end + 1);
+    }
+    const line = text.slice(begin, end);
+    if (!line.trim()) {
+        return parseRowAt(text, begin - 1);
+    }
+    return parseLine(line);
+}
+function parseLengths() {
     const field = document.getElementById("field");
     const lines = field.value.split("\n");
-    let rows = lines.map((line)=>{
-        const texts = line.replaceAll(/[^-+\d\.e]+/g, " ").trim().split(/\s+/);
-        const vals = texts.map((text)=>parseFloat(text)
-        );
-        return vals;
-    });
-    rows = rows.filter((row)=>row.length == rows[0].length
-    );
-    return {
-        angleFrames: rows.slice(1),
-        lengths: rows[0]
-    };
+    return parseLine(lines[0]);
 }
 function render(chain) {
     const path = document.getElementById("path");
@@ -51,9 +74,7 @@ function render(chain) {
             y
         ]
     );
-    console.log(coords);
     const d = `M 0 0 L ${coords.join(" ")}`;
-    console.log(d);
     path.setAttribute("d", d);
 }
 main1();
