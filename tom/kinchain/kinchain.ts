@@ -24,16 +24,17 @@ function forward({ angles, lengths }: Arm): Transform[] {
 }
 
 export function main() {
-  const lengths = parseLengths();
   const field = document.getElementById("field") as HTMLTextAreaElement;
   const update = () => {
     const angles = parseRow(field);
+    const lengths = parseLengths();
     const chain = forward({ angles, lengths });
     render(chain);
   };
   update();
   document.addEventListener("selectionchange", (event) => {
-    if (event.target == field) {
+    console.log(event);
+    if (document.activeElement == field) {
       update();
     }
   });
@@ -47,6 +48,9 @@ function parseLine(line: string): number[] {
 
 function parseRow(field: HTMLTextAreaElement): number[] {
   const text: string = field.value;
+  if (!text.trim()) {
+    return [];
+  }
   const index: number = field.selectionStart;
   return parseRowAt(text, index);
 }
@@ -76,7 +80,7 @@ function parseLengths(): number[] {
 function render(chain: Transform[]) {
   const path = document.getElementById("path")!;
   const coords = chain.flatMap(({ point: { x, y } }) => [x, y]);
-  const d = `M 0 0 L ${coords.join(" ")}`;
+  const d = chain.length ? `M 0 0 L ${coords.join(" ")}` : "";
   path.setAttribute("d", d);
 }
 
