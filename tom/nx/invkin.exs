@@ -14,7 +14,7 @@ defmodule InvKin do
       0.0,
       [axes: [1]],
       fn length_angle, x ->
-        # angle = length_angle[{0, 1}]
+        # angle = length_angle[1]
         # length = length_angle[0]
         # Nx.add(x, Nx.tensor([Nx.cos(angle), Nx.sin(angle)]) * length)
         Nx.add(length_angle, x)
