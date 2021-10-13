@@ -5,3 +5,6 @@ env.sh
 notes/
 notes.txt
 *__pycache__
+.mix
+.hex
+.viminfo
