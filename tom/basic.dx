@@ -2,16 +2,22 @@ def square (x:n=>Float) : n=>Float =
     pow x (for i. 2.0)
 
 def sum_square (x:n=>Float) : Float =
-    -- :p 5
-    x2 = square x
-    sum x2
-    -- sum $ square x
+    sum $ square x
 
-def calc_grad (x:n=>Float) : n=>(Fin 3)=>Float =
+Small = Fin 17
+
+def calc_grad : Small=>(Fin 3)=>Float =
+    x = linspace Small (-4.0) 4.5
     transpose [x, square x, grad sum_square x]
 
-x = linspace (Fin 17) (-4.0) 4.5
-:p calc_grad x
+calc_grad
+
+def calc_speed : (Fin 2)=>Float =
+    big_size = FToI 1.0e8
+    x = linspace (Fin $ big_size) (-1.0) 1.0
+    [mean $ square x, mean $ grad sum_square x]
+
+calc_speed
 
 -- :p calc_grad
 -- :p grad sum_square x
