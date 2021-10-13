@@ -1,0 +1,8 @@
+Dim = Fin 2
+
+def main (lengths:n=>Float) (angles:n=>Float) : List (Dim=>Float) =
+    toList [[0.0, 0.0], [0.0, 1.0], [0.0, 0.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0]]
+
+(AsList _ x) = main [1.0, 1.0, 0.5] ([0.5 , -0.25, -0.25] * (for i. pi))
+x
+-- for i. unsafeIO do print $ show ax.i.(1 @ _)
