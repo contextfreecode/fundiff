@@ -36,7 +36,7 @@ defmodule InvKin do
     angles = Nx.tensor([0.5 * pi, -0.25 * pi, -0.25 * pi])
     lengths = Nx.tensor([1.0, 1.0, 0.5])
     show(lengths)
-    goal = Nx.tensor([0.0, 1.0])
+    goal = Nx.tensor([0.0, 0.5])
     result = invert(lengths, angles, goal)
     show(result)
   end
