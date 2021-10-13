@@ -13,7 +13,7 @@ def calc_grad : Small=>(Fin 3)=>Float =
 calc_grad
 
 def calc_speed : (Fin 2)=>Float =
-    big_size = FToI 1.0e8
+    big_size = FToI 1.0e7
     x = linspace (Fin $ big_size) (-1.0) 1.0
     [mean $ square x, mean $ grad sum_square x]
 

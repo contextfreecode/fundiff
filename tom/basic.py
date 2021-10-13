@@ -9,9 +9,8 @@ Array = typ.Union[float, np.ndarray]
 
 
 def calc_backend():
-    # TODO At what function complexity does jit matter or not?
-    # TODO Demo of changed behavior for non-functional code:
-    # TODO https://jax.readthedocs.io/en/latest/faq.html#jit-changes-the-behavior-of-my-function
+    # Demo of changed behavior for non-functional code:
+    # https://jax.readthedocs.io/en/latest/faq.html#jit-changes-the-behavior-of-my-function
     square_cpu = jax.jit(square, backend="cpu")
     square_gpu = jax.jit(square, backend="gpu")
     x = linspace(-1, 1, int(1e8))
