@@ -1,0 +1,45 @@
+* {
+    font-size: 24pt;
+}
+
+body {
+    background: #222;
+    bottom: 0;
+    color: white;
+    display: flex;
+    font-family: sans-serif;
+    left: 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#display {
+    flex: 1;
+}
+
+#field {
+    background: #111;
+    color: white;
+    flex: 1;
+    font-family: monospace;
+    font-size: 80%;
+    width: 25em;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+}
+
+h1 {
+    margin: 0 0 0.25em;
+}
+
+line, path {
+    fill: none;
+    stroke: white;
+    stroke-linejoin: bevel;
+}

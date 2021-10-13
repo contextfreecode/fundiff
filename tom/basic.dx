@@ -17,3 +17,4 @@ x = linspace (Fin 17) (-4.0) 4.5
 -- :p grad sum_square x
 -- :p grad (\x. sum $ square x) x
 -- :p jvp square x one
+-- unsafeIO do print $ show 5
