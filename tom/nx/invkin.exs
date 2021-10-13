@@ -19,18 +19,12 @@ defmodule InvKin do
     offsets |> Nx.sum(axes: [1])
   end
 
-  defn update(lengths, angles, goal, rate) do
-    angles - rate * grad(angles, &loss(lengths, &1, goal))
+  defn goal_step(lengths, angles, goal) do
+    grad(angles, &loss(lengths, &1, goal))
   end
 
   def invert(lengths, angles, goal) do
-    rate = 0.1
-    nsteps = 20
-    for _ <- 1..nsteps, reduce: angles do
-      angles ->
-        show(angles)
-        update(lengths, angles, goal, rate)
-    end
+    optimize(&goal_step(lengths, &1, goal), angles)
   end
 
   defn loss(lengths, angles, goal) do
@@ -45,6 +39,16 @@ defmodule InvKin do
     goal = Nx.tensor([0.0, 1.0])
     result = invert(lengths, angles, goal)
     show(result)
+  end
+
+  def optimize(step, x) do
+    rate = 0.1
+    nsteps = 20
+    for _ <- 1..nsteps, reduce: x do
+      x ->
+        show(x)
+        Nx.subtract(x, Nx.multiply(rate, step.(x)))
+    end
   end
 
   def show(x) do
