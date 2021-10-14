@@ -1,8 +1,18 @@
 Dim = Fin 2
 
-def main (lengths:n=>Float) (angles:n=>Float) : List (Dim=>Float) =
-    toList [[0.0, 0.0], [0.0, 1.0], [0.0, 0.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0], [0.0, 1.0]]
+def forward ({angles, lengths}:{angles:n=>Float & lengths:n=>Float}) :
+        Dim=>Float =
+    angles = cumSum angles
+    offsets = [cos angles, sin angles] * (for i. lengths)
+    for i. sum offsets.i
 
-(AsList _ x) = main [1.0, 1.0, 0.5] ([0.5 , -0.25, -0.25] * (for i. pi))
-x
+def main ({angles, lengths}:{angles:n=>Float & lengths:n=>Float}) :
+        -- TODO Change to List (n=>Float) for angles!!!
+        List (Dim=>Float) =
+    toList [forward {angles, lengths}]
+
+lengths = [1.0, 1.0, 0.5]
+(AsList _ seq) = main {angles=[0.5 , -0.25, -0.25] * (for i. pi), lengths}
+lengths
+seq
 -- for i. unsafeIO do print $ show ax.i.(1 @ _)
