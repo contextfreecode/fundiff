@@ -1,3 +1,4 @@
+Chain = (n:Type ?-> {angles: n => Float32 & lengths: n => Float32})
 Dim = Fin 2
 
 def forward ({angles, lengths}:{angles:n=>Float & lengths:n=>Float}) :
@@ -6,13 +7,27 @@ def forward ({angles, lengths}:{angles:n=>Float & lengths:n=>Float}) :
     offsets = [cos angles, sin angles] * (for i. lengths)
     for i. sum offsets.i
 
-def main ({angles, lengths}:{angles:n=>Float & lengths:n=>Float}) :
+def main ({angles, goal, lengths}:{
+        angles:n=>Float & goal:Dim=>Float & lengths:n=>Float
         -- TODO Change to List (n=>Float) for angles!!!
-        List (Dim=>Float) =
+        }) : List (Dim=>Float) =
+    loss = \angles. sum for i. sq (forward {angles, lengths} - goal).i
     toList [forward {angles, lengths}]
 
+-- def optimize (fun:(n=>Float)->Float) (x:n=>Float) : n=>Float =
+--     funGrad = grad fun
+--     rate = 0.1
+--     NSteps = Fin 20
+--     a = yieldState x $ \state.
+--         for i:NSteps.
+--             x = get state
+--             state := x - rate .* (funGrad x)
+--         state
+--     x
+
+angles = [0.5 , -0.25, -0.25] * (for i. pi)
 lengths = [1.0, 1.0, 0.5]
-(AsList _ seq) = main {angles=[0.5 , -0.25, -0.25] * (for i. pi), lengths}
+(AsList _ seq) = main {angles, goal = [0.0, 1.0], lengths}
 lengths
 seq
 -- for i. unsafeIO do print $ show ax.i.(1 @ _)
