@@ -50,6 +50,6 @@ RUN pip install sklearn torch
 RUN apt -y install vim
 
 # User
-RUN useradd -rm -u 1001 -g root fundiff
+#RUN useradd -rm -u 1001 -g root fundiff
 WORKDIR /home/fundiff
-USER fundiff
+#USER fundiff
