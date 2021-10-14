@@ -24,13 +24,15 @@ function main1() {
         field.value = defaultText;
     }
     const update = ()=>{
-        const angles = parseRow(field);
-        const lengths = parseLengths();
-        const chain = forward({
-            angles,
-            lengths
-        });
-        render(chain);
+        setTimeout(()=>{
+            const angles = parseRow(field);
+            const lengths = parseLengths();
+            const chain = forward({
+                angles,
+                lengths
+            });
+            render(chain);
+        }, 0);
     };
     update();
     field.addEventListener("click", (event)=>update()
