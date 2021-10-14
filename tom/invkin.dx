@@ -14,16 +14,15 @@ def main ({angles, goal, lengths}:{
     loss = \angles. sum for i. sq (forward {angles, lengths} - goal).i
     toList [forward {angles, lengths}]
 
--- def optimize (fun:(n=>Float)->Float) (x:n=>Float) : n=>Float =
---     funGrad = grad fun
---     rate = 0.1
---     NSteps = Fin 20
---     a = yieldState x $ \state.
---         for i:NSteps.
---             x = get state
---             state := x - rate .* (funGrad x)
---         state
---     x
+def optimize (fun:(n=>Float)->Float) (x:n=>Float) : List (n=>Float) =
+    funGrad = grad fun
+    rate = 0.1
+    NSteps = Fin 20
+    toList $ withState x $ \state.
+        for i:NSteps.
+            x = get state
+            state := x - rate .* (funGrad x)
+            x
 
 angles = [0.5 , -0.25, -0.25] * (for i. pi)
 lengths = [1.0, 1.0, 0.5]
