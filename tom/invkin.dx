@@ -17,9 +17,11 @@ def optimize (fun:(n=>Float)->Float) (x:n=>Float) : List (n=>Float) =
             state := x - rate .* (funGrad x)
             x
 
-def main ({angles, goal, lengths}:{
+def main
+        ({angles, goal, lengths}:{
             angles:n=>Float & goal:Dim=>Float & lengths:n=>Float
-        }) : List (n=>Float) =
+        })
+        : List (n=>Float) =
     loss = \angles. sum for i. sq (forward {angles, lengths} - goal).i
     optimize loss angles
 
