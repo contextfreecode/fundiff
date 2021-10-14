@@ -4,3 +4,7 @@ env.sh
 .mypy_cache/
 notes/
 notes.txt
+*__pycache__
+.mix
+.hex
+.viminfo

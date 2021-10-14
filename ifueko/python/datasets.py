@@ -21,6 +21,7 @@ import os
 from os import path
 import struct
 import urllib.request
+import torch
 
 import numpy as np
 
@@ -76,7 +77,7 @@ def mnist_raw():
   return train_images, train_labels, test_images, test_labels
 
 
-def mnist(permute_train=False):
+def mnist(permute_train=False, use_torch=False):
   """Download, parse and process MNIST data to unit scale and one-hot labels."""
   train_images, train_labels, test_images, test_labels = mnist_raw()
 
@@ -89,5 +90,10 @@ def mnist(permute_train=False):
     perm = np.random.RandomState(0).permutation(train_images.shape[0])
     train_images = train_images[perm]
     train_labels = train_labels[perm]
+  if use_torch:
+    train_images = torch.Tensor(train_images).cuda()
+    train_labels = torch.Tensor(train_labels).cuda()
+    test_images = torch.Tensor(test_images).cuda()
+    test_labels = torch.Tensor(test_labels).cuda()
 
   return train_images, train_labels, test_images, test_labels

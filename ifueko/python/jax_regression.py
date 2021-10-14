@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 
 # create our dataset
-X, y = make_regression(n_features=3)
+X, y = make_regression(n_features=3, random_state=0)
 X, X_test, y, y_test = train_test_split(X, y)
 
 
@@ -34,9 +34,10 @@ def update(params, grads):
 
 
 # the main training loop
-for _ in range(50):
-    loss = loss_fn(params, X_test, y_test)
-    print(loss)
-
+for _ in range(200):
     grads = grad_fn(params, X, y)
     params = update(params, grads)
+loss_train = loss_fn(params, X, y)
+loss_test = loss_fn(params, X_test, y_test)
+print('Train', loss_train)
+print('Test', loss_test)
