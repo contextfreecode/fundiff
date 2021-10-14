@@ -7,13 +7,6 @@ def forward ({angles, lengths}:{angles:n=>Float & lengths:n=>Float}) :
     offsets = [cos angles, sin angles] * (for i. lengths)
     for i. sum offsets.i
 
-def main ({angles, goal, lengths}:{
-        angles:n=>Float & goal:Dim=>Float & lengths:n=>Float
-        -- TODO Change to List (n=>Float) for angles!!!
-        }) : List (Dim=>Float) =
-    loss = \angles. sum for i. sq (forward {angles, lengths} - goal).i
-    toList [forward {angles, lengths}]
-
 def optimize (fun:(n=>Float)->Float) (x:n=>Float) : List (n=>Float) =
     funGrad = grad fun
     rate = 0.1
@@ -23,6 +16,12 @@ def optimize (fun:(n=>Float)->Float) (x:n=>Float) : List (n=>Float) =
             x = get state
             state := x - rate .* (funGrad x)
             x
+
+def main ({angles, goal, lengths}:{
+            angles:n=>Float & goal:Dim=>Float & lengths:n=>Float
+        }) : List (n=>Float) =
+    loss = \angles. sum for i. sq (forward {angles, lengths} - goal).i
+    optimize loss angles
 
 angles = [0.5 , -0.25, -0.25] * (for i. pi)
 lengths = [1.0, 1.0, 0.5]
