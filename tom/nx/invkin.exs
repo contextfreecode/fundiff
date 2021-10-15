@@ -28,7 +28,7 @@ defmodule InvKin do
   end
 
   defn loss(lengths, angles, goal) do
-    Nx.power(forward(lengths, angles) - goal, 2.0) |> Nx.sum()
+    Nx.power(forward(lengths, angles) - goal, 2.0) |> Nx.mean()
   end
 
   def main do
@@ -42,7 +42,7 @@ defmodule InvKin do
   end
 
   def optimize(step, x) do
-    rate = 0.1
+    rate = 0.2
     nsteps = 20
     for _ <- 1..nsteps, reduce: x do
       x ->

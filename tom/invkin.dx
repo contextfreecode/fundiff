@@ -9,7 +9,7 @@ def forward ({angles, lengths}:{angles:n=>Float & lengths:n=>Float}) :
 
 def optimize (fun:(n=>Float)->Float) (x:n=>Float) : List (n=>Float) =
   funGrad = grad fun
-  rate = 0.1
+  rate = 0.2
   NSteps = Fin 20
   toList $ withState x $ \state.
     for i:NSteps.
@@ -21,12 +21,12 @@ def main
     ({angles, goal, lengths}:{
       angles:n=>Float & goal:Dim=>Float & lengths:n=>Float
     }) : List (n=>Float) =
-  loss = \angles. sum for i. sq (forward {angles, lengths} - goal).i
+  loss = \angles. mean for i. sq (forward {angles, lengths} - goal).i
   optimize loss angles
 
 angles = [0.5, -0.25, -0.25] * (for i. pi)
 lengths = [1.0, 1.0, 0.5]
-(AsList _ seq) = main {angles, goal = [0.0, 1.0], lengths}
+(AsList _ seq) = main {angles, goal = [0.0, 0.5], lengths}
 lengths
 angles
 seq

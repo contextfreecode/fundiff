@@ -18,7 +18,10 @@ Array = typ.Union[float, jnp.ndarray]
 
 
 def armify(angles: jnp.ndarray, lengths: jnp.ndarray) -> Arm:
-    return [Link(angle=angle, length=length) for angle, length in zip(angles, lengths)]
+    return [
+        Link(angle=angle, length=length)
+        for angle, length in zip(angles, lengths)
+    ]
 
 
 @jax.jit
@@ -52,9 +55,9 @@ def invert(*, angles: jnp.ndarray, goal: jnp.ndarray, lengths: jnp.ndarray):
     print("invert")
     print(lengths)
     print(angles)
-    loss = lambda angles: jnp.linalg.norm(
-        forward2(angles=angles, lengths=lengths) - goal
-    )
+    loss = lambda angles: (
+        (forward2(angles=angles, lengths=lengths) - goal) ** 2
+    ).mean()
     optimize(fun=loss, x=angles)
 
 
@@ -67,7 +70,7 @@ def main():
 
 def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:
     fun_grad = jax.grad(fun)
-    rate = 0.1
+    rate = 0.2
     nsteps = 20
     for _ in range(nsteps):
         x -= rate * fun_grad(x)
