@@ -1,4 +1,5 @@
 %{
+  "benchwarmer": {:hex, :benchwarmer, "0.0.2", "902e5c020608647b07c38b82103e4af6d2667dfd5d5d13c67382238de6943136", [:mix], [], "hexpm", "8b98b39c1c50df624f9c2d13ca953eeed465eed6feda975da26b479df2b4c9f5"},
   "elixir_make": {:hex, :elixir_make, "0.6.2", "7dffacd77dec4c37b39af867cedaabb0b59f6a871f89722c25b28fcd4bd70530", [:mix], [], "hexpm", "03e49eadda22526a7e5279d53321d1cced6552f344ba4e03e619063de75348d9"},
   "exla": {:git, "https://github.com/elixir-nx/nx.git", "9693a02c87d8b15b4698dfc19cfbcbd96d118dc5", [sparse: "exla"]},
   "nx": {:git, "https://github.com/elixir-nx/nx.git", "9693a02c87d8b15b4698dfc19cfbcbd96d118dc5", [sparse: "nx"]},

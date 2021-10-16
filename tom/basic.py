@@ -1,11 +1,11 @@
 import jax
 from jax._src.numpy.lax_numpy import linspace
-import jax.numpy as np
-# import numpy as np
+import jax.numpy as jnp
+# import numpy as jnp
 import typing as typ
 
 
-Array = typ.Union[float, np.ndarray]
+Array = typ.Union[float, jnp.ndarray]
 
 
 def calc_backend():
@@ -15,30 +15,29 @@ def calc_backend():
     square_gpu = jax.jit(square, backend="gpu")
     x = linspace(-1, 1, int(1e8))
     print("go")
-    # TODO Time execution.
     print(square_cpu(x).mean())
     print(square_gpu(x).mean())
 
 
 def calc_grad():
     square_grad = jax.grad(lambda x: square(x).sum())
-    square_grad2 = lambda x: np.diag(jax.jacobian(square)(x))
-    x = np.linspace(-4, 4, 17)
-    y = np.vstack([x, square(x), square_grad(x), square_grad2(x)]).T
+    # square_grad = lambda x: jnp.diag(jax.jacobian(square)(x))
+    # square_grad = lambda x: jax.jvp(square, [x], [jnp.ones_like(x)])[1]
+    x = jnp.linspace(-4, 4, 17)
+    y = jnp.vstack([x, square(x), square_grad(x)]).T
     print(y)
-    print(np.vstack(jax.jvp(square, [x], [np.ones_like(x)])).T)
 
 
 # @jax.jit
 def square(x: Array) -> Array:
     return x ** 2
-    # return np.power(x, 2)
+    # return jnp.power(x, 2)
 
 
 def main():
-    calc_backend()
+    # calc_backend()
     calc_grad()
-    print(optimize(fun=square, x=4.0))
+    # print(optimize(fun=square, x=4.0))
 
 
 def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:
@@ -51,4 +50,5 @@ def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:
     return x
 
 
-main()
+if __name__ == "__main__":
+    main()
