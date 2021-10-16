@@ -8,15 +8,20 @@ import typing as typ
 Array = typ.Union[float, jnp.ndarray]
 
 
-def calc_backend():
-    # Demo of changed behavior for non-functional code:
-    # https://jax.readthedocs.io/en/latest/faq.html#jit-changes-the-behavior-of-my-function
-    square_cpu = jax.jit(square, backend="cpu")
-    square_gpu = jax.jit(square, backend="gpu")
+def sum_square(x: Array) -> Array:
+    return jnp.sum(square(x))
+
+
+# @jax.jit
+def calc_speed():
     x = linspace(-1, 1, int(1e8))
-    print("go")
-    print(square_cpu(x).mean())
-    print(square_gpu(x).mean())
+    square_grad = jax.grad(sum_square)
+    y = jnp.array([square(x), square_grad(x)])
+    return y.mean(axis=1)
+
+
+calc_speed_cpu = jax.jit(calc_speed, backend="cpu")
+calc_speed_gpu = jax.jit(calc_speed, backend="gpu")
 
 
 def calc_grad():
@@ -28,16 +33,17 @@ def calc_grad():
     print(y)
 
 
-# @jax.jit
 def square(x: Array) -> Array:
     return x ** 2
     # return jnp.power(x, 2)
+    # return x ** 4 - 2 * x ** 2 + x
 
 
 def main():
-    # calc_backend()
     calc_grad()
-    # print(optimize(fun=square, x=4.0))
+    # print(calc_speed_cpu())
+    # print(calc_speed_gpu())
+    # print(optimize(fun=sum_square, x=4.0))  # jnp.array([1.0, 4.0])
 
 
 def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:

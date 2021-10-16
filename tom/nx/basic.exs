@@ -2,14 +2,13 @@ defmodule Basic do
 
   import Nx.Defn
 
-  defn calc_grad do
-    x = linspace(-1, 1, 5)
-    Nx.transpose(Nx.stack([x, x |> square(), x |> square_grad()]))
+  defn linspace(min, max, count) do
+    Nx.iota({count}) * (max - min) / (count - 1) + min
   end
 
   defn calc_speed do
     x = linspace(-1, 1, 100_000_000)
-    x |> square() |> Nx.mean()
+    Nx.stack([square(x), square_grad(x)]) |> Nx.mean(axes: [1])
   end
 
   @defn_compiler EXLA
@@ -22,16 +21,18 @@ defmodule Basic do
     calc_speed()
   end
 
-  defn linspace(min, max, count) do
-    Nx.iota({count}) * (max - min) / (count - 1) + min
-  end
-
   defn square(x) do
     Nx.power(x, 2.0)
   end
 
   defn square_grad(x) do
     grad(x, fn x -> square(x) end)
+    # grad(x, &square/1)
+  end
+
+  defn calc_grad do
+    x = linspace(-1, 1, 5)
+    Nx.transpose(Nx.stack([x, square(x), square_grad(x)]))
   end
 
   def main do
