@@ -1,7 +1,7 @@
 import jax
 from jax._src.numpy.lax_numpy import linspace
 import jax.numpy as jnp
-# import numpy as jnp
+import numpy as np
 import typing as typ
 
 
@@ -23,7 +23,7 @@ def calc_grad():
     square_grad = jax.grad(lambda x: square(x).sum())
     # square_grad = lambda x: jnp.diag(jax.jacobian(square)(x))
     # square_grad = lambda x: jax.jvp(square, [x], [jnp.ones_like(x)])[1]
-    x = jnp.linspace(-4, 4, 17)
+    x = jnp.linspace(-1, 1, 5)
     y = jnp.vstack([x, square(x), square_grad(x)]).T
     print(y)
 

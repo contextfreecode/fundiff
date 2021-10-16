@@ -5,10 +5,10 @@ def square (x:n=>Float) : n=>Float =
 def sum_square (x:n=>Float) : Float =
   sum $ square x
 
-Small = Fin 17
+Small = Fin 5
 
 def calc_grad : Small=>(Fin 3)=>Float =
-  x = linspace Small (-4.0) 4.5
+  x = linspace Small (-1.0) 1.5
   transpose [x, square x, grad sum_square x]
 
 calc_grad

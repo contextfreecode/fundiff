@@ -3,7 +3,7 @@ defmodule Basic do
   import Nx.Defn
 
   defn calc_grad do
-    x = linspace(-4, 4, 17)
+    x = linspace(-1, 1, 5)
     Nx.transpose(Nx.stack([x, x |> square(), x |> square_grad()]))
   end
 
@@ -36,9 +36,9 @@ defmodule Basic do
 
   def main do
     IO.inspect(calc_grad())
-    IO.puts("go")
-    IO.inspect(calc_speed_cpu())
-    IO.inspect(calc_speed_gpu())
+    # IO.puts("go")
+    # IO.inspect(calc_speed_cpu())
+    # IO.inspect(calc_speed_gpu())
   end
 
 end
