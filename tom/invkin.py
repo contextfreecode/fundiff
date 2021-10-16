@@ -68,7 +68,7 @@ def main():
     # forward_angles = lambda angles: forward2(angles=angles, lengths=lengths)
     # process(angles=angles, forward=forward_angles)
     # process_variety(angles=angles, lengths=lengths)
-    invert(angles=angles, goal=jnp.array([0.0, 0.5]), lengths=lengths)
+    # invert(angles=angles, goal=jnp.array([0.0, 0.5]), lengths=lengths)
 
 
 def optimize(*, fun: typ.Callable[[Array], float], x: Array) -> Array:

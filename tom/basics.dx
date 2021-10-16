@@ -18,6 +18,6 @@ def calcSpeed : _=>Float =
   for i. mean y.i
 
 calcGrad
-calcSpeed
+-- calcSpeed
 
 -- jvp square x one
