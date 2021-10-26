@@ -1,30 +1,11 @@
 # Linear Regression, Basic CNNs with Dex, Jax and Nx
-### in progress
 
-Here we want to replicate the same procedures using Dex, Jax and Nx.
-We'll do both linear regression and MNIST basic classification identitcally with both frameworks.
-Code for these examples will be adapted from existing examples.
-
-TODO(ifueko)
-- [x] Baseline examples
-- [ ] Update examples for exact replication (random seed? save initial weights?)
-- [ ] Docker Container
-- [ ] Speed + Memory Profiling (compare the two)
-- [ ] Advancecd Examples (ImageNet? NYUDepth?)
+## Watch the companion video on YouTube [here](https://youtu.be/OuyrFujaTE0)
 
 ## Base Examples
-### Dex
-- [Dex Linear Regression](https://github.com/google-research/dex-lang/blob/main/examples/regression.dx)
-- [Dex MNIST](https://github.com/google-research/dex-lang/blob/main/examples/mnist-nearest-neighbors.dx)
-- [Dex Full Tutorial (Includes Fashion MNIST)](https://github.com/google-research/dex-lang/blob/main/examples/tutorial.dx)
-
 ### JAX
 - [Jax Linear Regression](https://coax.readthedocs.io/en/latest/examples/linear_regression/jax.html)
 - [Jax MNIST Classification](https://github.com/google/jax/blob/main/examples/mnist_classifier.py)
-
-### Nx
-- [Nx Linear Regression](https://github.com/elixir-nx/nx/blob/main/exla/examples/regression.exs)
-- [Nx MNIST Classification](https://github.com/elixir-nx/nx/blob/main/exla/examples/mnist.exs)
 
 ## Useful Links for Education
 - [How to Think in Jax](https://jax.readthedocs.io/en/latest/notebooks/thinking_in_jax.html)
