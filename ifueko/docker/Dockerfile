@@ -3,6 +3,7 @@ FROM docker.io/nvidia/cuda:11.4.2-cudnn8-devel-ubuntu18.04
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get upgrade -y
 
+# Dex and Nx dependencies are actually optional.
 # Dex dependencies
 RUN apt-get install -y llvm-9-dev clang-9 libpng-dev
 RUN apt-get install -y git
@@ -40,16 +41,13 @@ ENV LC_ALL en_US.UTF-8
 RUN apt -y install python3 python3-pip
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+RUN pip install sklearn torch jupyter-console
 
 # Jax
 RUN pip install --upgrade pip
 RUN pip install --upgrade "jax[cuda111]" -f https://storage.googleapis.com/jax-releases/jax_releases.html
-RUN pip install sklearn torch
 
 # Editor
 RUN apt -y install vim
 
-# User
-#RUN useradd -rm -u 1001 -g root fundiff
-WORKDIR /home/fundiff
-#USER fundiff
+WORKDIR /home/fundiff/ifueko/python
